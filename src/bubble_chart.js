@@ -42,7 +42,7 @@ function bubbleChart() {
     var myNodes = rawData.map(function (d) {
       return {
         id: d.id,
-        radius: radiusScale(+d["Dollars Investment"]),
+        radius: radiusScale(+d["Dollars Investment"]) / 1.3,
         value: +d["Dollars Investment"],
         name: d.Name,
         group: prioritiesArray[Math.floor(Math.random() * prioritiesArray.length)],
@@ -71,9 +71,7 @@ function bubbleChart() {
     bubbles = svg.selectAll('.bubble')
       .data(nodes, function (d) { return d.id; });
 
-    var bubblesE = bubbles.enter()
-      .append('g').classed('bubble-group',true)
-      .append('circle')
+    var bubblesE = bubbles.enter().append('circle')
       .classed('bubble', true)
       .attr('r', 0)
       .attr('fill', function (d) { return fillColor(d.group); })
@@ -82,7 +80,20 @@ function bubbleChart() {
       .on('mouseover', showDetail)
       .on('mouseout', hideDetail);
 
+    // var images = bubbles.selectAll('.image')
+    //   .data(nodes)
+    //   .enter()
+    //   .append("svg:image")
+    //   .classed("image")
+    //   .attr("xlink:href", function (d) { return "https://crunchbase-production-res.cloudinary.com/image/upload/c_lpad,h_120,w_120,f_jpg/v1476902335/gxc55ywhnod0a9jh0wtd.jpg"; })
+    //   .attr("x", function (d) { return -25; })
+    //   .attr("y", function (d) { return -25; })
+    //   .attr("height", 30)
+    //   .attr("width", 30);
+
+
     bubbles = bubbles.merge(bubblesE);
+    // bubbles = bubbles.merge(images);
 
     bubbles.transition()
       .duration(2000)
