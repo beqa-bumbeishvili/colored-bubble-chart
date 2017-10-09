@@ -1,12 +1,4 @@
-/*
- * Creates tooltip with provided id that
- * floats on top of visualization.
- * Most styling is expected to come from CSS
- * so check out bubble_chart.css for more details.
- */
 function floatingTooltip(tooltipId, width) {
-  // Local variable to hold tooltip div for
-  // manipulation in other functions.
   var tt = d3.select('body')
     .append('div')
     .attr('class', 'tooltip')
@@ -73,8 +65,8 @@ function floatingTooltip(tooltipId, width) {
     }
 
     tt
-      .style('top', tttop + 'px')
-      .style('left', ttleft + 'px');
+      .style('top', (curY-100) + 'px')
+      .style('left', ttleft/1.2 + 'px');
   }
 
   return {

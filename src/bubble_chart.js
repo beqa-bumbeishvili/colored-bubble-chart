@@ -42,7 +42,7 @@ function bubbleChart() {
     var myNodes = rawData.map(function (d) {
       return {
         id: d.id,
-        radius: radiusScale(+d["Dollars Investment"]) / 1.3,
+        radius: radiusScale(+d["Dollars Investment"]) / 1.38,
         value: +d["Dollars Investment"],
         name: d.Name,
         group: prioritiesArray[Math.floor(Math.random() * prioritiesArray.length)],
@@ -75,10 +75,29 @@ function bubbleChart() {
       .classed('bubble', true)
       .attr('r', 0)
       .attr('fill', function (d) { return fillColor(d.group); })
-      .attr('stroke', function (d) { return d3.rgb(fillColor(d.group)).darker(); })
-      .attr('stroke-width', 2)
+      .attr('stroke', 'rgb(126, 150, 93)')
+      .attr('stroke-width', 1)
       .on('mouseover', showDetail)
       .on('mouseout', hideDetail);
+
+    var rightCircLeContainer = svg
+	    .append("g")
+	    .attr("transform", function(d){return "translate(855,300)"})
+ 
+    var circle = rightCircLeContainer.append("circle")
+      .attr('r',85)
+      // .attr('cx',855)
+      // .attr('cy',300)
+      .attr('stroke-width',1)
+      .attr('stroke','#999')
+      .attr('stroke-dasharray','4 4')
+      .attr('fill','none');
+ 
+    rightCircLeContainer.append("text")
+	    .attr("font-size", 17)
+      .attr('text-anchor','middle')
+	    .attr("fill", '#665')
+	    .text(function(d){return 'forecast text goes here';})
 
     // var images = bubbles.selectAll('.image')
     //   .data(nodes)
@@ -157,20 +176,22 @@ function bubbleChart() {
 
   function showDetail(d) {
     // change outline to indicate hover state.
-    d3.select(this).attr('stroke', 'black');
+    d3.select(this).attr('stroke', 'black').attr('stroke-width', 3);
 
-    var content = '<span class="name">Title: </span><span class="value">' +
-      d.name +
-      '</span><br/>' +
-      '<span class="name">Category: </span><span class="value">' +
+    var content =
+      '<span class="category-value">' +
       d.category +
       '</span><br/>' +
-      '<span class="name">Amount: </span><span class="value">$' +
-      addCommas(d.value) +
+      '<div class="hr-line"> </div>' +
+      '<span class="name-value">' +
+      d.name +
       '</span><br/>' +
-      '<span class="name">Year: </span><span class="value">' +
+      '<span class="year-value">' +
       d.year +
-      '</span>';
+      '</span><br>' +
+      '<span class="usd-value">$' +
+      addCommas(d.value) +
+      '</span><br/>';
 
     tooltip.showTooltip(content, d3.event);
   }
@@ -178,7 +199,8 @@ function bubbleChart() {
   function hideDetail(d) {
 
     d3.select(this)
-      .attr('stroke', d3.rgb(fillColor(d.group)).darker());
+      .attr('stroke', d3.rgb(fillColor(d.group)))
+      .attr('stroke-width', 1);
 
     tooltip.hideTooltip();
   }
