@@ -26,11 +26,11 @@ function bubbleChart() {
   simulation.stop();
 
   var fillColor = d3.scaleOrdinal()
-    .domain(['low', 'medium', 'high'])
-    .range(['#beccae', '#9caf84', '#7aa25c']);
+    .domain(['color1', 'color2', 'color3','color4'])
+    .range(['#ACB5C3', '#D91E18', '#3598DC','#F7CA18']);
 
   function createNodes(rawData) {
-    prioritiesArray = ['low', 'medium', 'high'];
+    prioritiesArray = ['color1', 'color2', 'color3','color4'];
 
     var maxAmount = d3.max(rawData, function (d) { return +d["Dollars Investment"]; });
 
@@ -86,8 +86,6 @@ function bubbleChart() {
  
     var circle = rightCircLeContainer.append("circle")
       .attr('r',85)
-      // .attr('cx',855)
-      // .attr('cy',300)
       .attr('stroke-width',1)
       .attr('stroke','#999')
       .attr('stroke-dasharray','4 4')
@@ -102,7 +100,7 @@ function bubbleChart() {
     // var images = bubbles.selectAll('.image')
     //   .data(nodes)
     //   .enter()
-    //   .append("svg:image")
+    //   .append("image")
     //   .classed("image")
     //   .attr("xlink:href", function (d) { return "https://crunchbase-production-res.cloudinary.com/image/upload/c_lpad,h_120,w_120,f_jpg/v1476902335/gxc55ywhnod0a9jh0wtd.jpg"; })
     //   .attr("x", function (d) { return -25; })
